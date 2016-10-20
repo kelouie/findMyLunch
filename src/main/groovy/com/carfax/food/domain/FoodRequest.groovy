@@ -10,5 +10,5 @@ import groovy.transform.Canonical
  */
 @Canonical
 class FoodRequest {
-
+    String feed
 }

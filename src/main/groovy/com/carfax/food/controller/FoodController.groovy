@@ -1,5 +1,7 @@
 package com.carfax.food.controller
 
+import com.carfax.food.service.FoodService
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.RequestMapping
@@ -14,10 +16,13 @@ import javax.annotation.Resource
 @Controller
 class FoodController {
 
+    @Autowired
+    FoodService foodService
 
     @RequestMapping("/findMyLunch")
     public String findMyLunch(@RequestParam(value="room",required=false) String room, Model model) {
         model.addAttribute("room", room);
+        foodService.getFoodRequests()
         return "findMyLunch";
     }
 }
