@@ -1,14 +1,24 @@
 package com.carfax.food.domain
 
-import groovy.transform.Canonical
-
-
-
-
+import javax.xml.bind.annotation.XmlAccessType
+import javax.xml.bind.annotation.XmlAccessorType
+import javax.xml.bind.annotation.XmlElement
+import javax.xml.bind.annotation.XmlRootElement
 /**
  * Created by katharinelouie on 6/10/16.
  */
-@Canonical
+@XmlRootElement(name = 'content')
+@XmlAccessorType( XmlAccessType.NONE )
 class FoodRequest {
-    String feed
+
+    @XmlElement(name = 'properties', namespace = 'http://schemas.microsoft.com/ado/2007/08/dataservices/metadata')
+    List feed
+
+//    String getFeed() {
+//        feed
+//    }
+//
+//    void setFeed(String feed) {
+//        this.feed = feed
+//    }
 }
