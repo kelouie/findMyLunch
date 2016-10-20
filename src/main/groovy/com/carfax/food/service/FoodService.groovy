@@ -2,6 +2,7 @@ package com.carfax.food.service
 
 import com.carfax.food.domain.FoodRequest
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import com.sun.deploy.net.HttpResponse
 import groovy.util.logging.Slf4j
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpEntity
@@ -35,16 +36,17 @@ class FoodService {
             HttpHeaders httpHeaders = createHeaders('KatharineLouie', password)
             HttpEntity request = new HttpEntity<String>(httpHeaders)
 
-//            List<FoodRequest> requests = foodRequestRestTemplate.exchange(
-//                    URL,
-//                    HttpMethod.GET,
-//                    request,
-//                    FoodRequest
-//
-//            )
+            HttpResponse contextResponse = foodRequestRestTemplate.exchange(
+                    'https://intranet.carfax.net/_api/contextinfo',
+                    HttpMethod.POST,
+                    request,
+                    HttpResponse
+
+            )
+
+
 
             List<FoodRequest> requests = foodRequestRestTemplate.getForObject(URL, FoodRequest)
-                    //getForObject(URL, FoodRequest.class)
             println 'requests ' + requests
             return requests
         } catch (HttpClientErrorException e) {
