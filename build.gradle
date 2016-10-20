@@ -25,6 +25,7 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-thymeleaf")
     compile("org.springframework.boot:spring-boot-devtools")
     compile group: 'org.apache.tomcat', name: 'tomcat-util', version: '8.5.5'
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.0.0'
 }
 
 task wrapper(type: Wrapper) {

@@ -1,58 +1,35 @@
 package com.carfax.food.service
 
 import com.carfax.food.domain.FoodRequest
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.sun.deploy.net.HttpResponse
 import groovy.util.logging.Slf4j
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.http.HttpEntity
-import org.springframework.http.HttpHeaders
-import org.springframework.http.HttpMethod
-import org.springframework.stereotype.Component
-import org.springframework.web.client.HttpClientErrorException
-import org.springframework.web.client.RestTemplate
 import org.apache.tomcat.util.codec.binary.Base64
-
-import javax.annotation.Resource
-
+import org.openqa.selenium.By
+import org.openqa.selenium.WebDriver
+import org.openqa.selenium.WebElement
+import org.openqa.selenium.chrome.ChromeDriver
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.http.HttpHeaders
+import org.springframework.stereotype.Component
 
 @Component
 @Slf4j
 class FoodService {
 
-    private static final String URL = 'https://intranet.carfax.net/Department/VA/OfficeAdmin/_api/lists/'
+    @Value('${username}')
+    String username
 
-    @Resource(name = 'restTemplate')
-    RestTemplate foodRequestRestTemplate
-
-    @Value('${katies.password}')
+    @Value('${password}')
     String password
 
     List<FoodRequest> getFoodRequests(){
-//        final URI uri = UriComponentsBuilder.fromUriString('https://intranet.carfax.net/Department/VA/OfficeAdmin/_api/lists/')
-//                .build().encode().toUri()
+        WebDriver driver = new ChromeDriver()
+        driver.get("https://$username:$password@intranet.carfax.net")
 
-        try {
-            HttpHeaders httpHeaders = createHeaders('KatharineLouie', password)
-            HttpEntity request = new HttpEntity<String>(httpHeaders)
+        driver.get('https://intranet.carfax.net/Department/VA/OfficeAdmin/_api/lists/getbytitle(\'Food Service Request storage\')/items')
+        WebElement element = driver.findElement(By.tagName('pre'))
+        String result = element.getAttribute('innerHTML')
 
-            HttpResponse contextResponse = foodRequestRestTemplate.exchange(
-                    'https://intranet.carfax.net/_api/contextinfo',
-                    HttpMethod.POST,
-                    request,
-                    HttpResponse
-
-            )
-
-
-
-            List<FoodRequest> requests = foodRequestRestTemplate.getForObject(URL, FoodRequest)
-            println 'requests ' + requests
-            return requests
-        } catch (HttpClientErrorException e) {
-            log.error(e.message)
-            return null
-        }
+        return result
     }
 
     static HttpHeaders createHeaders(String username, String password) {
