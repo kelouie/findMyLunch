@@ -12,4 +12,5 @@ class FoodRequestTypes {
             3 : 'Popcorn Machine - 24 hours notice required',
             6 : 'Snacks - 24 hours  notice required',
             4 : 'Special Event - 72 hours notice required'
+            ]
 }
