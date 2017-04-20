@@ -1,5 +1,6 @@
 package com.carfax.food.service
 
+import com.carfax.food.domain.ConferenceRoom
 import com.carfax.food.domain.FoodRequest
 import groovy.util.logging.Slf4j
 import org.apache.tomcat.util.codec.binary.Base64
@@ -22,10 +23,13 @@ class FoodService {
     String password
 
     List<FoodRequest> getFoodRequests(){
+        File file = new File("/Users/katharinelouie/Downloads/chromedriver 2");
+        System.setProperty("webdriver.chrome.driver", file.getAbsolutePath());
+
         WebDriver driver = new ChromeDriver()
         driver.get("https://$username:$password@intranet.carfax.net")
 
-        driver.get('https://intranet.carfax.net/Department/VA/OfficeAdmin/_api/lists/getbytitle(\'Food Service Request storage\')/items')
+        driver.get('https://intranet.carfax.net/Department/VA/OfficeAdmin/_api/lists/getbytitle(\'Food Service Request storage\')/items?$select=*&$filter=(Serve_x0020_Date ge datetime\'2017-04-20T00%3a00%3a00\') and (Serve_x0020_Date lt datetime\'2017-04-21T00%3a00%3a00\')')
         WebElement element = driver.findElement(By.tagName('pre'))
         String innerHtml = element.getAttribute('innerHTML')
 
@@ -57,6 +61,14 @@ class FoodService {
         httpHeaders.add('Authorization', "Basic $encodedAuthString")
 
         return httpHeaders
+    }
+
+    List<ConferenceRoom> getConferenceRooms(){
+        List<ConferenceRoom> rooms
+        rooms.add(new ConferenceRoom(id=27, roomName='VA 1-Owner Room', floor=4))
+        rooms.add(new ConferenceRoom(id=27, roomName='VA 1-Owner Room', floor=4))
+
+        return rooms
     }
 }
 

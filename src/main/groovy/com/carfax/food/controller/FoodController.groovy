@@ -21,8 +21,9 @@ class FoodController {
 
     @RequestMapping("/findMyLunch")
     public String findMyLunch(@RequestParam(value="room",required=false) String room, Model model) {
-        model.addAttribute("room", room);
-        foodService.getFoodRequests()
+
+    //    model.addAttribute("foodRequests", foodService.getFoodRequests());
+
         return "findMyLunch";
     }
 }
