@@ -1,6 +1,8 @@
 package com.carfax.food.domain
 
+import com.carfax.food.service.FoodService
 import groovy.util.logging.Slf4j
+import org.springframework.beans.factory.annotation.Autowired
 
 import java.text.DateFormat
 import java.text.ParseException
@@ -16,9 +18,11 @@ class FoodRequest {
 
     Date serveDate
     Integer deliveryLocation
+    ConferenceRoom room
     String businessPurpose
     Integer numberOfPeople
     Integer typeOfFood
+    String food
     String dietaryConcerns
     String notes
     String vendorName
@@ -26,14 +30,24 @@ class FoodRequest {
     FoodRequest() {}
 
     FoodRequest(properties) {
+
+        def rooms = FoodService.getConferenceRooms()
+
         serveDate = createServeDate("${properties.Serve_x0020_Date}", "${properties.Serve_x0020_Time}")
         deliveryLocation = Integer.parseInt("${properties.Delivery_x0020_LocationId}")
+        room = rooms.find(){it.id == deliveryLocation}
         businessPurpose = properties.Business_x0020_Purpose
         numberOfPeople = Integer.parseInt("${properties.Number_x0020_of_x0020_People}")
         typeOfFood = Integer.parseInt("${properties.Type_x0020_Of_x0020_FoodId}")
+        food = FoodRequestTypes.foodTypeMapping.get(typeOfFood)
         dietaryConcerns = properties.Dietary_x0020_Concerns_x002F_sug
         notes = properties.Notes
         vendorName = properties.Vendor_x0020_Name
+
+    }
+
+    public String getRoomName(){
+        room?.roomName
     }
 
     protected static Date createServeDate(String serveDate, String serveTime) {

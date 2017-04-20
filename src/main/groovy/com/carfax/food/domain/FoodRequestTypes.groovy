@@ -2,7 +2,7 @@ package com.carfax.food.domain
 
 class FoodRequestTypes {
 
-    Map foodTypeMapping = [
+    static Map foodTypeMapping = [
             2 : 'Breakfast - Cold - 48 hour notice required',
             9 : 'Breakfast - Hot - 72 hour notice required',
             5 : 'Deli Platter - 72 hour notice required',

@@ -5,7 +5,7 @@ package com.carfax.food.domain
  */
 class ConferenceRoom {
 
-    int id
+    Integer id
     String roomName
     int floor
 
