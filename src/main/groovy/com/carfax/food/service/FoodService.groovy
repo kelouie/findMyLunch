@@ -29,6 +29,8 @@ class FoodService {
         WebElement element = driver.findElement(By.tagName('pre'))
         String innerHtml = element.getAttribute('innerHTML')
 
+        driver.quit()
+
         innerHtml = innerHtml.replace("&lt;", "<").replace("&gt;", ">")
 
         def result = new XmlSlurper().parseText(innerHtml).declareNamespace(
@@ -39,7 +41,11 @@ class FoodService {
         )
         log.info("${result.entry[1].content.properties.RequestorId}")
 
-        return null
+        List<FoodRequest> foodRequestList = result.entry.collect {
+            new FoodRequest(it.content.properties)
+        }
+
+        return foodRequestList
     }
 
     static HttpHeaders createHeaders(String username, String password) {
