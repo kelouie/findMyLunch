@@ -29,7 +29,7 @@ class FoodService {
         WebDriver driver = new ChromeDriver()
         driver.get("https://$username:$password@intranet.carfax.net")
 
-        driver.get('https://intranet.carfax.net/Department/VA/OfficeAdmin/_api/lists/getbytitle(\'Food Service Request storage\')/items?$select=*&$filter=(Serve_x0020_Date ge datetime\'2017-04-20T00%3a00%3a00\') and (Serve_x0020_Date lt datetime\'2017-04-21T00%3a00%3a00\')')
+        driver.get('https://intranet.carfax.net/Department/VA/OfficeAdmin/_api/lists/getbytitle(\'Food Service Request storage\')/items?$select=*&$filter=(Serve_x0020_Date ge datetime\'2017-04-19T00%3a00%3a00\') and (Serve_x0020_Date lt datetime\'2017-04-22T00%3a00%3a00\')')
         WebElement element = driver.findElement(By.tagName('pre'))
         String innerHtml = element.getAttribute('innerHTML')
 
@@ -99,10 +99,11 @@ class FoodService {
         rooms.add(new ConferenceRoom(id:39, roomName:'VA The Lot Room', floor:4))
         rooms.add(new ConferenceRoom(id:15, roomName:'VA Total Loss Room', floor:6))
         rooms.add(new ConferenceRoom(id:12, roomName:'VA VIN', floor:3))
-        rooms.add(new ConferenceRoom(id:26, roomName:'VA Other', floor:2))
+        rooms.add(new ConferenceRoom(id:26, roomName:'VA Other', floor:0))
         rooms.add(new ConferenceRoom(id:30, roomName:'VA Well Maintained Room', floor:4))
         rooms.add(new ConferenceRoom(id:29, roomName:'VA Wisdom Room', floor:4))
         rooms.add(new ConferenceRoom(id:1, roomName:'VA Wreck Room', floor:6))
+        rooms.add(new ConferenceRoom(id:-1, roomName:'Unknown', floor:0))
 
         return rooms
     }

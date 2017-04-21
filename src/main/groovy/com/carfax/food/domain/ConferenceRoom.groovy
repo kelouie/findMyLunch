@@ -9,4 +9,8 @@ class ConferenceRoom {
     String roomName
     int floor
 
+    String getRoomAndFloor() {
+        "$roomName\n(Floor $floor)"
+    }
+
 }

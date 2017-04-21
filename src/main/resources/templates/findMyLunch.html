@@ -14,25 +14,38 @@
 </head>
 <body>
 
-<div class="row">
-    <div class="col-sm-2">Business Purpose</div>
-    <div class="col-sm-1">Serve Date</div>
-    <div class="col-sm-1">Room Name</div>
-    <div class="col-sm-1">Number of People</div>
-    <div class="col-sm-2">Food Type</div>
-    <div class="col-sm-3">Special Requests</div>
-    <div class="col-sm-2">Vendor Name</div>
-</div>
-
-<div class="row" th:each="request : ${foodRequests}">
-    <div class="col-sm-2" th:text="${request.businessPurpose}"/>
-    <div class="col-sm-1" th:text="${request.serveDate}"/>
-    <div class="col-sm-1" th:text="${request.room.roomName}"/>
-    <div class="col-sm-1" th:text="${request.numberOfPeople}"/>
-    <div class="col-sm-2" th:text="${request.food}"/>
-    <div class="col-sm-3" th:text="${request.dietaryConcerns}"/>
-    <div class="col-sm-2" th:text="${request.vendorName}"/>
-</div>
+    <div class="table-responsive">
+        <table class="table table-condensed table-bordered">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Room</th>
+                    <th>Vendor</th>
+                    <th>Food Type</th>
+                    <th>Number of People</th>
+                    <th>Meeting</th>
+                    <th>Special Requests</th>
+                </tr>
+            </thead>
+            <tr th:each="day : ${#lists.sort(days)}">
+                <tr th:each="request, itrStat : ${#lists.sort(day.foodRequests)}">
+                    <td th:if="${itrStat.index} == 0" th:rowspan="${itrStat.size}" th:width="170">
+                        <div th:text="${day.dayOfMonth}" th:style="'width: 40px;font-size: 36px;line-height: 36px;float: left;text-align: right;margin-right: 10px;'"> </div>
+                        <div th:text="${day.dayOfWeek}"></div>
+                        <div th:text="${day.monthYear}" th:class="text-muted" th:style="'font-size: 0.75em;'"></div>
+                    </td>
+                    <td th:text="${request.time}" th:width="140"/>
+                    <td th:text="${request.roomDisplay}"/>
+                    <td th:text="${request.vendorName}"/>
+                    <td th:text="${request.food}"/>
+                    <td th:text="${request.numberOfPeople}"/>
+                    <td th:text="${request.businessPurpose}"/>
+                    <td th:text="${request.dietaryConcerns}"/>
+                </tr>
+            </tr>
+        </table>
+    </div>
 
 </body>
 </html>
