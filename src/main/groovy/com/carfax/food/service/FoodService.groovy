@@ -29,7 +29,7 @@ class FoodService {
         WebDriver driver = new ChromeDriver()
         driver.get("https://$username:$password@intranet.carfax.net")
 
-        driver.get('https://intranet.carfax.net/Department/VA/OfficeAdmin/_api/lists/getbytitle(\'Food Service Request storage\')/items?$select=*&$filter=(Serve_x0020_Date ge datetime\'2017-04-19T00%3a00%3a00\') and (Serve_x0020_Date lt datetime\'2017-04-22T00%3a00%3a00\')')
+        driver.get('https://intranet.carfax.net/Department/VA/OfficeAdmin/_api/lists/getbytitle(\'Food Service Request storage\')/items?$select=*&$filter=(Serve_x0020_Date ge datetime\'2017-04-20T00%3a00%3a00\') and (Serve_x0020_Date lt datetime\'2017-04-28T00%3a00%3a00\')')
         WebElement element = driver.findElement(By.tagName('pre'))
         String innerHtml = element.getAttribute('innerHTML')
 
