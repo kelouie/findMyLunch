@@ -18,10 +18,10 @@ class FoodController {
     FoodService foodService
 
     @RequestMapping("/findMyLunch")
-    public String findMyLunch(@RequestParam(value="room",required=false) String room, Model model) {
+    public String findMyLunch(@RequestParam(value="maxDate",required=false) String maxDate, Model model) {
 
         List<Day> days = []
-        List<FoodRequest> foodRequests = foodService.getFoodRequests()
+        List<FoodRequest> foodRequests = foodService.getFoodRequests(maxDate)
 
         foodRequests.each { FoodRequest foodRequest ->
             Day day = days.find { it.calendar.get(Calendar.DAY_OF_YEAR) == foodRequest.dayOfYear }
